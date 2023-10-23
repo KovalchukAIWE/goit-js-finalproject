@@ -36,16 +36,26 @@ function handlerClick(evt) {
   createModal(product);
 }
 
+const lightboxOptions = {
+  onShow: () => {
+    document.addEventListener('keydown', handleEscape);
+  },
+  onClose: () => {
+    document.removeEventListener('keydown', handleEscape);
+  },
+};
+
 function createModal(product) {
   if (product) {
     const { original, description } = product;
     instance = basicLightbox.create(`
-    <img
-      data-source="${original}"
-      src="${original}"
-      alt="${description}"
-    />
-  `);
+      <img
+        data-source="${original}"
+        src="${original}"
+        alt="${description}"
+      />
+    `, lightboxOptions);
+
     instance.show();
   }
 }
